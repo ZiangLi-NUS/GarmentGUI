@@ -1,8 +1,8 @@
 import cv2, os, struct, numpy as np, io
 from moviepy import VideoFileClip
 
-VIDEO_IN = "P:/VideoProject.mp4"
-OUT_DIR  = "P:/"
+VIDEO_IN = os.getcwd() + "/video.mp4"
+OUT_DIR = os.getcwd()
 os.makedirs(OUT_DIR, exist_ok=True)
 
 W, H = 96, 54
@@ -22,17 +22,19 @@ step = max(1, int(round(src_fps / FPS_TARGET)))
 zone_paths = [os.path.join(OUT_DIR, f"zvideo_zone{z}.bin") for z in range(ZONES)]
 zone_files = [open(p, "wb") for p in zone_paths]
 for f in zone_files:
-    f.write(b"ZVID" + b"\x00"*20) 
+    f.write(b"ZVID" + b"\x00" * 20)
+
 
 def rgb888_to_rgb565(arr):
-    r = (arr[:,:,0] >> 3).astype(np.uint16)
-    g = (arr[:,:,1] >> 2).astype(np.uint16)
-    b = (arr[:,:,2] >> 3).astype(np.uint16)
+    r = (arr[:, :, 0] >> 3).astype(np.uint16)
+    g = (arr[:, :, 1] >> 2).astype(np.uint16)
+    b = (arr[:, :, 2] >> 3).astype(np.uint16)
     rgb565 = (r << 11) | (g << 5) | b
     lo = (rgb565 & 0xFF).astype(np.uint8)
     hi = (rgb565 >> 8).astype(np.uint8)
-    out = np.dstack((lo,hi)).reshape(-1)
+    out = np.dstack((lo, hi)).reshape(-1)
     return out.tobytes()
+
 
 saved_frames = 0
 frame_idx = 0
@@ -46,8 +48,8 @@ while True:
     small = cv2.resize(frame, (W, H), interpolation=cv2.INTER_AREA)
     rgb = cv2.cvtColor(small, cv2.COLOR_BGR2RGB)
     for z, f in enumerate(zone_files):
-        r0, r1 = z*ROWS_PER_ZONE, (z+1)*ROWS_PER_ZONE
-        f.write(rgb888_to_rgb565(rgb[r0:r1,:,:]))
+        r0, r1 = z * ROWS_PER_ZONE, (z + 1) * ROWS_PER_ZONE
+        f.write(rgb888_to_rgb565(rgb[r0:r1, :, :]))
     saved_frames += 1
     frame_idx += 1
 cap.release()
@@ -57,7 +59,7 @@ for f in zone_files:
     f.seek(0)
     f.write(struct.pack("<4sHHHHIB7s", b"ZVID", W, H,
                         ROWS_PER_ZONE, BPP, saved_frames,
-                        PIXEL_FORMAT, b"\x00"*7))
+                        PIXEL_FORMAT, b"\x00" * 7))
     f.close()
 
 # --- Audio ---
@@ -69,7 +71,7 @@ clip.audio.write_audiofile(
     fps=22050,
     nbytes=2,
     codec="pcm_s16le",
-    ffmpeg_params=["-ac","1"]
+    ffmpeg_params=["-ac", "1"]
 )
 clip.close()
 
@@ -80,6 +82,7 @@ buf = io.BytesIO(data)
 riff = buf.read(12)
 pcm_bytes = None
 import struct as st
+
 while True:
     ch = buf.read(8)
     if len(ch) < 8: break
