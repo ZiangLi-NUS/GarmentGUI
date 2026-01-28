@@ -1,6 +1,6 @@
 Prerequest: Python 3.9 or above, with the following libraries: numpy, pillow, opencv-python and moviepy
 Plateform: Windows, macOS, Linux, or any other system supports python
-Program has been suceessfully tested on: macOS V15.7.3, Pycharm 2024.1.7 (Community Edition), Python 3.9
+Program has been suceessfully tested on: macOS V15.7.3, Pycharm 2024.1.7 (Community Edition), Python 3.9 and Windows 11 Education 24H2, VScode V1.108.2, Python 3.11.9
 
 Instruction to run "image2txt.py"
 1. put any photo in {".png", ".jpg", ".jpeg", ".bmp", ".gif", ".webp", ".tif", ".tiff"} format under the same folder of "image2txt.py"
