@@ -1,6 +1,9 @@
 Prerequest: Python 3.9 or above, with the following libraries: numpy, pillow, opencv-python and moviepy
 Plateform: Windows, macOS, Linux, or any other system supports python
+Non-standard hardware requirement: None
 Program has been suceessfully tested on: macOS V15.7.3, Pycharm 2024.1.7 (Community Edition), Python 3.9 and Windows 11 Education 24H2, VScode V1.108.2, Python 3.11.9
+Expected installation time: <10 min
+Expected run time for demo: <10 min
 
 Instruction to run "image2txt.py"
 1. put any photo in {".png", ".jpg", ".jpeg", ".bmp", ".gif", ".webp", ".tif", ".tiff"} format under the same folder of "image2txt.py"
@@ -12,3 +15,4 @@ Instruction to run "video2BinFiles.py"
 2. run the program
 3. Eight files will be generated, six of them are in ".bin" format which will be uploaded six display control MCUs controlling corresponding six display zones of the screen.
    ".pcm" file will also be uploaded and played as the audio part of the video. ".wav" file is for researcher to check the output audio.
+
